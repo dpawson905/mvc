@@ -8,7 +8,6 @@ const MongoDBStore = require('connect-mongodb-session')(session);
 const csrf = require('csurf');
 const flash = require('connect-flash');
 const multer = require('multer');
-const randomstring = require('randomstring');
 
 const errorController = require('./controllers/error');
 const User = require('./models/user');
@@ -28,7 +27,7 @@ const fileStorage = multer.diskStorage({
     cb(null, 'images');
   },
   filename: (req, file, cb) => {
-    cb(null, new Date().getTime() + "-" + file.originalname);
+    cb(null, new Date().toISOString().replace(/:/g, '-') + '-' + file.originalname);
   }
 });
 
